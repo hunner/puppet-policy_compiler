@@ -23,7 +23,7 @@ class Puppet::Resource::Catalog::PolicyCompiler < Puppet::Resource::Catalog::Com
   def find(request)
     ## Call normal catalog compiler and grab the facts
     catalog = super
-    facts = Puppet::Node::Facts.convert_from(request.options[:facts_format], request.options[:facts]).values
+    facts = Puppet::Node::Facts.convert_from(request.options[:facts_format], CGI.unescape(request.options[:facts])).values
 
     ## Check policy failures and return catalog if there were no failures
     if (failed_policies = policy_check(catalog, facts)).empty?
