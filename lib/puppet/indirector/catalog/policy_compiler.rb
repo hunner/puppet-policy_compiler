@@ -41,7 +41,7 @@ class Puppet::Resource::Catalog::PolicyCompiler < Puppet::Resource::Catalog::Com
       c.add_formatter(:json)
       c.add_setting :catalog, :default => catalog
       c.add_setting :facts,   :default => facts
-      c.backtrace_clean_patterns = [
+      c.backtrace_exclusion_patterns = [
         /\/puppet\/(lib|bin)\//,
         /\/ruby\//,
       ]
