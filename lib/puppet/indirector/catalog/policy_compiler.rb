@@ -23,7 +23,7 @@ class Puppet::Resource::Catalog::PolicyCompiler < Puppet::Resource::Catalog::Com
   def find(request)
     ## Call normal catalog compiler and grab the facts
     catalog = super
-    facts = Puppet::Node::Facts.convert_from(request.options[:facts_format], request.options[:facts]).values
+    facts = extract_facts_from_request(request)
 
     ## Check policy failures and return catalog if there were no failures
     if (failed_policies = policy_check(catalog, facts)).empty?
@@ -41,7 +41,7 @@ class Puppet::Resource::Catalog::PolicyCompiler < Puppet::Resource::Catalog::Com
       c.add_formatter(:json)
       c.add_setting :catalog, :default => catalog
       c.add_setting :facts,   :default => facts
-      c.backtrace_clean_patterns = [
+      c.backtrace_exclusion_patterns = [
         /\/puppet\/(lib|bin)\//,
         /\/ruby\//,
       ]
