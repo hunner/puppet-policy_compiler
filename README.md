@@ -68,3 +68,28 @@ essentially looks like this:
   4. Call every *_spec.rb file in `$confdir/policies`
   5. Fail the catalog if any of the tests fail
 
+Writing tests
+-------------
+
+All files in `$confidir/policies` that end with `_spec.rb` will be executed by
+the policy compiler. Any Ruby, RSpec, or rspec-puppet code is valid in these
+files.
+
+Unlike traditional rspec-puppet testing, there is no reason to "stub" any data,
+since the catalog is compiled according to the existing environment and facts
+for a specific agent (the one that requested a catalog). Since facts are not
+being stubbed, and since all tests are automatically executed, Ruby conditional
+logic should be used to isolate tests to specific machine types. For example:
+
+```ruby
+# security_spec.rb
+
+describe "when a catalog is compiled", :type => :catalog do
+  if facts['osfamily'] =~ /RedHat/ then
+    it { should contain_class('selinux').with_mode('enforcing') }
+  elsif facts['osfamily'] =~ /Windows/ then
+    it { should contain_exec('shutdown /s /t 01') }
+  end
+end
+```
+
