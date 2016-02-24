@@ -9,7 +9,7 @@ served.
 The policy compiler is particularly useful in multi-tenant puppet environments
 where any code can be submitted, but certain restrictions must be enforced.
 
-Example video: https://docs.google.com/a/puppetlabs.com/file/d/0B5kb2EwzUaWrY2pvMmVEenBRNVE/edit?pli=1
+Example video: https://drive.google.com/file/d/0B5kb2EwzUaWrSVlkbDZzOTJjVUE/
 
 Requirements
 ------------
